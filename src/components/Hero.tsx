@@ -1,6 +1,11 @@
 import chapelIllustration from '@/assets/chapel-watercolor.png'
+import { cn } from '@/lib/utils'
 
-export function Hero() {
+type HeroProps = {
+  introReady?: boolean
+}
+
+export function Hero({ introReady = true }: HeroProps) {
   return (
     <section
       id="top"
@@ -9,16 +14,31 @@ export function Hero() {
     >
       <div className="content-width">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="fade-up text-[clamp(3.25rem,10vw,6.75rem)] leading-[0.9]">
+          <h1
+            className={cn(
+              'text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.9]',
+              introReady ? 'hero-from-top' : 'hero-intro-hidden',
+            )}
+          >
             Great Moulton Chapel
           </h1>
-          <p className="fade-up-delay-1 mx-auto mt-6 max-w-xl text-xl leading-relaxed text-muted-foreground sm:mt-8 sm:text-2xl">
+          <p
+            className={cn(
+              'mx-auto mt-6 max-w-xl text-xl leading-relaxed text-muted-foreground sm:mt-8 sm:text-2xl',
+              introReady ? 'hero-from-top-delay-1' : 'hero-intro-hidden',
+            )}
+          >
             A friendly village chapel — Sunday worship, midweek coffee, and a
             warm welcome for everyone.
           </p>
         </div>
 
-        <div className="fade-up-delay-2 relative mt-10 sm:mt-12">
+        <div
+          className={cn(
+            'relative mt-10 sm:mt-12',
+            introReady ? 'hero-from-top-delay-2' : 'hero-intro-hidden',
+          )}
+        >
           <div className="overflow-hidden rounded-[2rem] bg-[color-mix(in_srgb,var(--linen-soft)_70%,#dfe8f0)] sm:rounded-[2.5rem]">
             <img
               src={chapelIllustration}

@@ -9,7 +9,6 @@ import { Meetings } from '@/components/Meetings'
 import { OpeningTimes } from '@/components/OpeningTimes'
 import { Welcome } from '@/components/Welcome'
 import { WelcomeLoader } from '@/components/WelcomeLoader'
-import { cn } from '@/lib/utils'
 
 type LoadPhase = 'loading' | 'exiting' | 'done'
 
@@ -20,7 +19,6 @@ function App() {
       ? 'done'
       : 'loading',
   )
-  const [revealed, setRevealed] = useState(false)
 
   const finishLoader = useCallback(() => {
     setPhase('done')
@@ -30,7 +28,7 @@ function App() {
     if (phase !== 'loading') return
 
     document.body.style.overflow = 'hidden'
-    const exitTimer = window.setTimeout(() => setPhase('exiting'), 2800)
+    const exitTimer = window.setTimeout(() => setPhase('exiting'), 2200)
 
     return () => {
       window.clearTimeout(exitTimer)
@@ -38,13 +36,12 @@ function App() {
   }, [phase])
 
   useEffect(() => {
-    if (phase === 'exiting') {
-      setRevealed(true)
-    }
     if (phase === 'done') {
       document.body.style.overflow = ''
     }
   }, [phase])
+
+  const introReady = phase === 'exiting' || phase === 'done'
 
   return (
     <>
@@ -55,18 +52,11 @@ function App() {
         />
       )}
 
-      <div
-        className={cn(
-          'min-h-svh',
-          phase === 'loading' && 'page-await',
-          phase === 'exiting' && 'page-reveal',
-          phase === 'done' && revealed && 'page-settled',
-        )}
-      >
+      <div className="min-h-svh">
         <Header />
         <main id="main" className="flex flex-col">
           <div className="order-1">
-            <Hero />
+            <Hero introReady={introReady} />
           </div>
           <div className="order-2 md:order-3">
             <Welcome />

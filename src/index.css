@@ -149,25 +149,28 @@
   }
 
   .loader-exit {
-    animation: loader-slide-up 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation: loader-fade-out 0.7s ease-in both;
   }
 
-  .loader-sign {
-    animation: loader-sign-in 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  .loader-write {
+    animation: loader-write 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
   }
 
-  .page-await {
-    transform: translateY(48px);
-    opacity: 0.01;
+  .hero-intro-hidden {
+    opacity: 0;
+    transform: translateY(-36px);
   }
 
-  .page-reveal {
-    animation: page-slide-up 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .hero-from-top {
+    animation: hero-from-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
   }
 
-  .page-settled {
-    opacity: 1;
-    transform: translateY(0);
+  .hero-from-top-delay-1 {
+    animation: hero-from-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  }
+
+  .hero-from-top-delay-2 {
+    animation: hero-from-top 1s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
   }
 
   .section-pad {
@@ -237,30 +240,33 @@
   }
 }
 
-@keyframes loader-sign-in {
+@keyframes loader-fade-out {
   from {
+    opacity: 1;
+  }
+  to {
     opacity: 0;
-    transform: translateY(28px) scale(0.94);
+  }
+}
+
+@keyframes loader-write {
+  from {
+    opacity: 0.2;
+    clip-path: inset(0 100% 0 0);
+  }
+  12% {
+    opacity: 1;
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    clip-path: inset(0 0 0 0);
   }
 }
 
-@keyframes loader-slide-up {
+@keyframes hero-from-top {
   from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes page-slide-up {
-  from {
-    opacity: 0.01;
-    transform: translateY(48px);
+    opacity: 0;
+    transform: translateY(-36px);
   }
   to {
     opacity: 1;
