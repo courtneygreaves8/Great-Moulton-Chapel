@@ -5,7 +5,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="section-pad !pb-14 pt-[calc(9.5rem+24px+72px)] sm:!pb-16 sm:pt-[calc(8rem+24px+72px)]"
+      className="section-pad !pb-14 !pt-[72px] sm:!pb-16"
       aria-label="Welcome"
     >
       <div className="content-width">
