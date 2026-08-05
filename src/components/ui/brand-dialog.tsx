@@ -57,75 +57,84 @@ export function BrandDialog({
       />
 
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={description ? descId : undefined}
         className={cn(
-          'relative z-10 max-h-[90svh] w-full overflow-y-auto rounded-[1.75rem] border border-border bg-card shadow-[0_28px_60px_-24px_rgba(100,93,86,0.45)]',
-          compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8',
+          'relative z-10 flex w-full flex-col',
           size === 'md' && 'max-w-lg',
           size === 'lg' && 'max-w-2xl',
           size === 'xl' && 'max-w-6xl',
-          compact && 'overflow-hidden',
-          className,
         )}
       >
-        <div
-          className="pointer-events-none absolute -top-10 -right-8 size-32 rounded-full bg-sage-soft blur-2xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-12 -left-10 size-28 rounded-full bg-beige-soft blur-2xl"
-          aria-hidden
-        />
-
         {topRight ? (
-          <div
-            className={cn(
-              'absolute z-10',
-              compact ? 'top-2.5 right-12' : 'top-3 right-14',
-            )}
-          >
-            {topRight}
-          </div>
+          <div className="mb-2 flex justify-end sm:hidden">{topRight}</div>
         ) : null}
 
-        <button
-          type="button"
-          onClick={onClose}
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          aria-describedby={description ? descId : undefined}
           className={cn(
-            'absolute z-10 flex items-center justify-center rounded-full text-muted-foreground transition hover:bg-beige-soft hover:text-foreground',
-            compact ? 'top-2.5 right-2.5 size-10' : 'top-3 right-3 size-12',
+            'relative max-h-[85svh] w-full overflow-y-auto overscroll-contain rounded-[1.75rem] border border-border bg-card shadow-[0_28px_60px_-24px_rgba(100,93,86,0.45)] sm:max-h-[90svh]',
+            compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8',
+            className,
           )}
-          aria-label="Close dialog"
         >
-          <X className={compact ? 'size-4' : 'size-5'} strokeWidth={2} />
-        </button>
+          <div
+            className="pointer-events-none absolute -top-10 -right-8 size-32 rounded-full bg-sage-soft blur-2xl"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-12 -left-10 size-28 rounded-full bg-beige-soft blur-2xl"
+            aria-hidden
+          />
 
-        <div className="relative">
-          <h2
-            id={titleId}
-            className={cn(
-              'font-display tracking-wide text-foreground',
-              topRight ? 'pr-44 sm:pr-52' : 'pr-12',
-              compact ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl',
-            )}
-          >
-            {title}
-          </h2>
-          {description ? (
-            <p
-              id={descId}
+          {topRight ? (
+            <div
               className={cn(
-                'leading-relaxed text-muted-foreground',
-                compact ? 'mt-2 text-base' : 'mt-4 text-lg',
+                'absolute z-10 hidden sm:block',
+                compact ? 'top-2.5 right-12' : 'top-3 right-14',
               )}
             >
-              {description}
-            </p>
+              {topRight}
+            </div>
           ) : null}
-          <div className={compact ? 'mt-4' : 'mt-6'}>{children}</div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className={cn(
+              'absolute z-10 flex items-center justify-center rounded-full text-muted-foreground transition hover:bg-beige-soft hover:text-foreground',
+              compact ? 'top-2.5 right-2.5 size-10' : 'top-3 right-3 size-12',
+            )}
+            aria-label="Close dialog"
+          >
+            <X className={compact ? 'size-4' : 'size-5'} strokeWidth={2} />
+          </button>
+
+          <div className="relative">
+            <h2
+              id={titleId}
+              className={cn(
+                'pr-12 font-display tracking-wide text-foreground',
+                topRight && 'sm:pr-52',
+                compact ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl',
+              )}
+            >
+              {title}
+            </h2>
+            {description ? (
+              <p
+                id={descId}
+                className={cn(
+                  'leading-relaxed text-muted-foreground',
+                  compact ? 'mt-2 text-base' : 'mt-4 text-lg',
+                )}
+              >
+                {description}
+              </p>
+            ) : null}
+            <div className={compact ? 'mt-4' : 'mt-6'}>{children}</div>
+          </div>
         </div>
       </div>
     </div>

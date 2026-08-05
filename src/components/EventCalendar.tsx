@@ -316,7 +316,8 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
 
           <div
             ref={scrollerRef}
-            className="flex gap-3 overflow-x-auto scroll-smooth px-7 py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:px-9 [&::-webkit-scrollbar]:hidden"
+            className="flex touch-pan-x gap-3 overflow-x-auto overscroll-x-contain scroll-smooth px-7 py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:px-9 [&::-webkit-scrollbar]:hidden"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {visibleCards.map((event, index) => {
               const eventYear = Number(event.id.slice(0, 4))
