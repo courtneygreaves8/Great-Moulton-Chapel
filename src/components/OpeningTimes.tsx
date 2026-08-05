@@ -39,7 +39,7 @@ export function OpeningTimes() {
   return (
     <section
       id="opening-times"
-      className="section-pad !pt-10 !pb-10 sm:!pt-16 sm:!pb-12"
+      className="section-pad !pt-10 !pb-24 sm:!pt-16 sm:!pb-12"
       aria-label="Opening times"
     >
       <div className="content-width">
