@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-sans: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-sage-deep: var(--sage-deep);
+  --color-beige: var(--beige);
+  --color-beige-soft: var(--beige-soft);
+  --color-linen: var(--linen);
+  --color-linen-soft: var(--linen-soft);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+}
+
+:root {
+  /* Source palette */
+  --linen: #ebeac7;
+  --beige: #ebd6c8;
+  --sage: #97a999;
+  --warm-grey: #645d56;
+
+  /* Softened mixes — palette as atmosphere & accent, not flat fills */
+  --linen-soft: color-mix(in srgb, var(--linen) 22%, white);
+  --beige-soft: color-mix(in srgb, var(--beige) 28%, white);
+  --sage-soft: color-mix(in srgb, var(--sage) 22%, white);
+  --sage-deep: color-mix(in srgb, var(--sage) 45%, var(--warm-grey));
+
+  --background: #f7f5f0;
+  --foreground: #645d56;
+  --card: #fffcf8;
+  --card-foreground: #645d56;
+  --popover: #fffcf8;
+  --popover-foreground: #645d56;
+  --primary: #645d56;
+  --primary-foreground: #f7f5f0;
+  --secondary: var(--beige-soft);
+  --secondary-foreground: #645d56;
+  --muted: color-mix(in srgb, var(--beige) 18%, white);
+  --muted-foreground: #7a736b;
+  --accent: var(--sage-soft);
+  --accent-foreground: #645d56;
+  --destructive: #b42318;
+  --border: color-mix(in srgb, var(--beige) 42%, white);
+  --input: color-mix(in srgb, var(--beige) 35%, white);
+  --ring: color-mix(in srgb, var(--sage) 55%, var(--warm-grey));
+  --radius: 1.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    background-color: var(--background);
+    background-image:
+      radial-gradient(
+        ellipse 90% 55% at 50% -15%,
+        color-mix(in srgb, var(--linen) 35%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 55% 40% at 0% 30%,
+        color-mix(in srgb, var(--beige) 22%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 45% 35% at 100% 70%,
+        color-mix(in srgb, var(--sage) 12%, transparent),
+        transparent 50%
+      );
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-normal uppercase tracking-wide text-foreground;
+    line-height: 0.95;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-4 ring-ring/35;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  .section-pad {
+    @apply px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24;
+  }
+
+  .content-width {
+    @apply mx-auto w-full max-w-6xl;
+  }
+
+  .section-soft {
+    background: color-mix(in srgb, var(--beige) 14%, transparent);
+  }
+
+  .eyebrow {
+    @apply text-sm font-bold uppercase tracking-[0.16em] text-sage-deep;
+  }
+
+  .fade-up {
+    animation: fade-up 0.8s ease-out both;
+  }
+
+  .fade-up-delay-1 {
+    animation: fade-up 0.8s ease-out 0.12s both;
+  }
+
+  .fade-up-delay-2 {
+    animation: fade-up 0.8s ease-out 0.24s both;
+  }
+
+  .fade-up-delay-3 {
+    animation: fade-up 0.8s ease-out 0.36s both;
+  }
+
+  .nav-link {
+    @apply relative text-base font-semibold text-foreground/75 transition-colors duration-300 hover:text-foreground;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-0.5 w-0 bg-sage transition-all duration-300;
+  }
+
+  .nav-link:hover::after,
+  .nav-link[data-active="true"]::after {
+    @apply w-full;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
