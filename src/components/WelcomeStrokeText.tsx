@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import welcomeStrokeUrl from '@/assets/welcome-to-stroke.svg?url'
+import { cn } from '@/lib/utils'
 
 type WelcomeStrokeTextProps = {
   className?: string
@@ -14,6 +15,7 @@ export function WelcomeStrokeText({ className }: WelcomeStrokeTextProps) {
 
     let cancelled = false
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const timers: number[] = []
 
     async function run() {
       const response = await fetch(welcomeStrokeUrl)
@@ -30,70 +32,48 @@ export function WelcomeStrokeText({ className }: WelcomeStrokeTextProps) {
       svg.setAttribute('aria-label', 'Welcome to')
 
       for (const path of paths) {
-        const length = path.getTotalLength()
-        path.style.stroke = 'currentColor'
-        path.style.fill = 'transparent'
-        path.style.strokeWidth = '2.4'
-        path.style.strokeLinecap = 'round'
-        path.style.strokeLinejoin = 'round'
+        const length = Math.max(path.getTotalLength(), 1)
         path.style.strokeDasharray = `${length}`
         path.style.strokeDashoffset = `${length}`
       }
 
       if (reduced) {
+        svg.classList.add('welcome-stroke-filled')
         for (const path of paths) {
           path.style.strokeDashoffset = '0'
-          path.style.fill = 'currentColor'
-          path.style.strokeWidth = '0'
         }
         return
       }
 
-      const perGlyph = 165
-      const fillDelay = paths.length * perGlyph + 120
+      // Letter-by-letter write, then soft fill — same feel as the old script loader
+      const perGlyph = 120
+      const drawDuration = 380
 
       paths.forEach((path, index) => {
-        path.animate(
-          [
-            { strokeDashoffset: path.getTotalLength() },
-            { strokeDashoffset: 0 },
-          ],
-          {
-            duration: 420,
-            delay: 180 + index * perGlyph,
-            easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-            fill: 'forwards',
-          },
-        )
-
-        path.animate(
-          [
-            { fill: 'transparent', strokeWidth: 2.4 },
-            { fill: 'currentColor', strokeWidth: 0.4 },
-          ],
-          {
-            duration: 380,
-            delay: fillDelay + index * 40,
-            easing: 'ease-out',
-            fill: 'forwards',
-          },
+        const delay = 140 + index * perGlyph
+        timers.push(
+          window.setTimeout(() => {
+            path.classList.add('welcome-glyph-drawing')
+          }, delay),
         )
       })
+
+      const fillAt = 140 + (paths.length - 1) * perGlyph + drawDuration + 160
+      timers.push(
+        window.setTimeout(() => {
+          svg.classList.add('welcome-stroke-filled')
+        }, fillAt),
+      )
     }
 
     void run()
 
     return () => {
       cancelled = true
+      for (const timer of timers) window.clearTimeout(timer)
       if (host) host.innerHTML = ''
     }
   }, [])
 
-  return (
-    <div
-      ref={hostRef}
-      className={className}
-      aria-hidden={false}
-    />
-  )
+  return <div ref={hostRef} className={cn('welcome-stroke-host text-primary', className)} />
 }

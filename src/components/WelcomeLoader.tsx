@@ -37,7 +37,7 @@ export function WelcomeLoader({ exiting = false, onExitComplete }: WelcomeLoader
         }}
       />
 
-      <WelcomeStrokeText className="relative w-[min(88vw,36rem)] text-foreground" />
+      <WelcomeStrokeText className="relative w-[min(90vw,40rem)]" />
     </div>
   )
 }
