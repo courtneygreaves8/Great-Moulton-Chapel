@@ -18,7 +18,7 @@ export function WelcomeLoader({ exiting = false, onExitComplete }: WelcomeLoader
     <div
       className={cn(
         'fixed inset-0 z-[100] flex items-center justify-center overflow-hidden',
-        exiting ? 'loader-exit' : 'loader-enter',
+        exiting && 'loader-exit',
       )}
       style={{
         background:

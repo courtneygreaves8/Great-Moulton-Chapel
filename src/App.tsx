@@ -9,6 +9,7 @@ import { Meetings } from '@/components/Meetings'
 import { OpeningTimes } from '@/components/OpeningTimes'
 import { Welcome } from '@/components/Welcome'
 import { WelcomeLoader } from '@/components/WelcomeLoader'
+import { cn } from '@/lib/utils'
 
 type LoadPhase = 'loading' | 'exiting' | 'done'
 
@@ -22,6 +23,11 @@ function App() {
 
   const finishLoader = useCallback(() => {
     setPhase('done')
+  }, [])
+
+  useEffect(() => {
+    document.getElementById('boot-loader')?.remove()
+    document.documentElement.classList.remove('boot-loading')
   }, [])
 
   useEffect(() => {
@@ -52,7 +58,10 @@ function App() {
         />
       )}
 
-      <div className="min-h-svh">
+      <div
+        className={cn('min-h-svh', phase === 'loading' && 'invisible')}
+        aria-hidden={phase === 'loading' || undefined}
+      >
         <Header />
         <main id="main" className="flex flex-col">
           <div className="order-1">
@@ -77,7 +86,7 @@ function App() {
         <Footer />
       </div>
 
-      <MadeByBabe />
+      {phase !== 'loading' ? <MadeByBabe /> : null}
     </>
   )
 }

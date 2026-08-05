@@ -19,7 +19,9 @@ export function Contact() {
       if (prefill.subject) setSubject(prefill.subject)
       if (prefill.message) setMessage(prefill.message)
       window.setTimeout(() => {
-        document.getElementById(prefill.subject ? 'subject' : 'message')?.focus()
+        const nameField = document.getElementById('name')
+        nameField?.focus()
+        nameField?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }, 400)
     }
 

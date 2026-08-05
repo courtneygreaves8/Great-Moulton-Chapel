@@ -15,8 +15,38 @@
       content="Great Moulton Evangelical Chapel — friendly Sunday worship and Wednesday coffee mornings in Great Moulton, Norfolk. All are welcome."
     />
     <title>Great Moulton Chapel</title>
+    <style>
+      html.boot-loading,
+      html.boot-loading body {
+        overflow: hidden;
+      }
+      #boot-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: linear-gradient(
+          160deg,
+          #c5cec0 0%,
+          #f3ebe0 45%,
+          #f7f5f0 100%
+        );
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot-loader {
+          display: none;
+        }
+        html.boot-loading,
+        html.boot-loading body {
+          overflow: auto;
+        }
+      }
+    </style>
   </head>
   <body>
+    <script>
+      document.documentElement.classList.add('boot-loading')
+    </script>
+    <div id="boot-loader" aria-hidden="true"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
