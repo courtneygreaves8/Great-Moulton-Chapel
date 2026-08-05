@@ -95,6 +95,11 @@
     }
   }
 
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-size: 1.125rem;
@@ -149,36 +154,44 @@
   }
 
   .loader-exit {
-    animation: loader-fade-out 0.7s ease-in both;
+    animation: loader-fade-out 0.9s ease-in-out both;
   }
 
-  .loader-write {
-    animation: loader-write 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+  .welcome-stroke-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .welcome-stroke-svg .welcome-glyph {
+    fill: transparent;
+    stroke: currentColor;
   }
 
   .hero-intro-hidden {
     opacity: 0;
-    transform: translateY(-36px);
+    transform: translateY(28px);
   }
 
-  .hero-from-top {
-    animation: hero-from-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+  .hero-rise {
+    animation: hero-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
   }
 
-  .hero-from-top-delay-1 {
-    animation: hero-from-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  .hero-rise-delay-1 {
+    animation: hero-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
   }
 
-  .hero-from-top-delay-2 {
-    animation: hero-from-top 1s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
+  .hero-rise-delay-2 {
+    animation: hero-rise 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
   }
 
   .section-pad {
-    @apply px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24;
+    @apply min-w-0 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24;
   }
 
   .content-width {
-    @apply mx-auto w-full max-w-6xl;
+    @apply mx-auto w-full min-w-0 max-w-6xl;
   }
 
   .section-soft {
@@ -249,24 +262,10 @@
   }
 }
 
-@keyframes loader-write {
-  from {
-    opacity: 0.2;
-    clip-path: inset(0 100% 0 0);
-  }
-  12% {
-    opacity: 1;
-  }
-  to {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes hero-from-top {
+@keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(-36px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;

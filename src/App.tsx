@@ -28,7 +28,7 @@ function App() {
     if (phase !== 'loading') return
 
     document.body.style.overflow = 'hidden'
-    const exitTimer = window.setTimeout(() => setPhase('exiting'), 2200)
+    const exitTimer = window.setTimeout(() => setPhase('exiting'), 2800)
 
     return () => {
       window.clearTimeout(exitTimer)

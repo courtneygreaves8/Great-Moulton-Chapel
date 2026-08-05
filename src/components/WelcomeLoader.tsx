@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { WelcomeStrokeText } from '@/components/WelcomeStrokeText'
 import { cn } from '@/lib/utils'
 
 type WelcomeLoaderProps = {
@@ -9,7 +10,7 @@ type WelcomeLoaderProps = {
 export function WelcomeLoader({ exiting = false, onExitComplete }: WelcomeLoaderProps) {
   useEffect(() => {
     if (!exiting || !onExitComplete) return
-    const doneTimer = window.setTimeout(onExitComplete, 700)
+    const doneTimer = window.setTimeout(onExitComplete, 900)
     return () => window.clearTimeout(doneTimer)
   }, [exiting, onExitComplete])
 
@@ -36,9 +37,7 @@ export function WelcomeLoader({ exiting = false, onExitComplete }: WelcomeLoader
         }}
       />
 
-      <p className="loader-write font-script relative px-6 text-center text-[clamp(3.75rem,14vw,7rem)] font-semibold leading-none text-foreground">
-        Welcome to
-      </p>
+      <WelcomeStrokeText className="relative w-[min(88vw,36rem)] text-foreground" />
     </div>
   )
 }

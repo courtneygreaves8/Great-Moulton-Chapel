@@ -43,10 +43,10 @@ export function Header() {
         Skip to content
       </a>
 
-      <div className="content-width flex items-center justify-between gap-4 px-5 py-5 sm:px-8 lg:px-12">
+      <div className="content-width flex min-w-0 items-center justify-between gap-3 px-5 py-5 sm:gap-4 sm:px-8 lg:px-12">
         <a
           href="#top"
-          className="font-display text-2xl tracking-wide text-foreground sm:text-3xl"
+          className="font-display min-w-0 flex-1 truncate text-xl tracking-wide text-foreground sm:flex-none sm:text-3xl"
           onClick={() => setOpen(false)}
         >
           Great Moulton Chapel
@@ -64,7 +64,7 @@ export function Header() {
           type="button"
           variant="outline"
           size="icon"
-          className="lg:hidden"
+          className="shrink-0 lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? 'Close menu' : 'Open menu'}
