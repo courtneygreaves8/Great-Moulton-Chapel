@@ -189,6 +189,7 @@ function formatEventDate(year: number, event: CalendarEvent) {
 export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
   const today = new Date()
   const scrollerRef = useRef<HTMLDivElement>(null)
+  const featureCardRef = useRef<HTMLDivElement>(null)
   const [monthCursor, setMonthCursor] = useState(
     () => new Date(today.getFullYear(), today.getMonth(), 1),
   )
@@ -262,6 +263,18 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
     }
   }, [visibleCards])
 
+  function scrollFeatureCardIntoView() {
+    // Feature card sits below the calendar only below the lg breakpoint
+    if (window.matchMedia('(min-width: 1024px)').matches) return
+    window.setTimeout(() => {
+      featureCardRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest',
+      })
+    }, 50)
+  }
+
   function shiftMonth(delta: number) {
     setMonthCursor((current) => new Date(current.getFullYear(), current.getMonth() + delta, 1))
     setSelectedId(null)
@@ -270,6 +283,7 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
   function selectDay(day: number) {
     const event = eventByDay.get(day)
     setSelectedId(event?.id ?? `empty-${year}-${month}-${day}`)
+    if (event) scrollFeatureCardIntoView()
   }
 
   function selectCard(event: CalendarEvent) {
@@ -278,6 +292,7 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
     if (eventYear !== year || event.month !== month) {
       setMonthCursor(new Date(eventYear, event.month, 1))
     }
+    scrollFeatureCardIntoView()
   }
 
   return (
@@ -456,7 +471,11 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
           </div>
         </div>
 
-        <div className="rounded-[1.25rem] bg-beige-soft/70 px-4 py-4 lg:min-h-full lg:self-stretch">
+        <div
+          ref={featureCardRef}
+          id="event-feature-card"
+          className="rounded-[1.25rem] bg-beige-soft/70 px-4 py-4 lg:min-h-full lg:self-stretch"
+        >
           {selectedEvent && !selectedId?.startsWith('empty-') ? (
             <>
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-sage-deep">

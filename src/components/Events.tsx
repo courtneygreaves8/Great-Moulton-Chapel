@@ -56,6 +56,7 @@ export function Events() {
   }) {
     setActive(null)
     goToContactForm({
+      subject: `${event.title} — ${event.date}`,
       message: [
         'Hello,',
         '',

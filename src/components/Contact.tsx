@@ -8,6 +8,7 @@ import { readContactPrefill } from '@/lib/contact-prefill'
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [subject, setSubject] = useState('')
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -15,9 +16,10 @@ export function Contact() {
       const prefill = readContactPrefill()
       if (!prefill) return
       setSubmitted(false)
-      setMessage(prefill.message)
+      if (prefill.subject) setSubject(prefill.subject)
+      if (prefill.message) setMessage(prefill.message)
       window.setTimeout(() => {
-        document.getElementById('message')?.focus()
+        document.getElementById(prefill.subject ? 'subject' : 'message')?.focus()
       }, 400)
     }
 
@@ -33,6 +35,7 @@ export function Contact() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setSubmitted(true)
+    setSubject('')
     setMessage('')
   }
 
@@ -167,6 +170,17 @@ export function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    required
+                    value={subject}
+                    onChange={(event) => setSubject(event.target.value)}
+                    placeholder="What is this about?"
+                  />
+                </div>
+                <div className="space-y-2">
                   <Label htmlFor="message">Your message</Label>
                   <Textarea
                     id="message"
@@ -181,8 +195,10 @@ export function Contact() {
                   Send message
                 </Button>
                 <p className="text-base text-muted-foreground">
-                  Prefer a quick reply? Call or email using the details on the
-                  left — we’ll get back to you as soon as we can.
+                  Prefer a quick reply? Call or email using the details{' '}
+                  <span className="lg:hidden">above</span>
+                  <span className="hidden lg:inline">on the left</span>
+                  {' '}— we’ll get back to you as soon as we can.
                 </p>
               </form>
             )}

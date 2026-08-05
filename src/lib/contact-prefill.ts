@@ -2,7 +2,8 @@
 export const CONTACT_PREFILL_KEY = 'gmc-contact-prefill'
 
 export type ContactPrefill = {
-  message: string
+  message?: string
+  subject?: string
 }
 
 export function writeContactPrefill(prefill: ContactPrefill) {
@@ -19,7 +20,7 @@ export function readContactPrefill(): ContactPrefill | null {
     if (!raw) return null
     sessionStorage.removeItem(CONTACT_PREFILL_KEY)
     const parsed = JSON.parse(raw) as ContactPrefill
-    if (!parsed?.message) return null
+    if (!parsed?.message && !parsed?.subject) return null
     return parsed
   } catch {
     return null
