@@ -93,113 +93,115 @@ export function EventCalendar() {
         </p>
       </div>
 
-      <div className="rounded-[1.5rem] border border-border bg-background/80 p-4 sm:p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-12 shrink-0"
-            onClick={() => shiftMonth(-1)}
-            aria-label="Previous month"
-          >
-            <ChevronLeft className="size-5" />
-          </Button>
-          <p className="font-display text-center text-3xl tracking-wide sm:text-4xl">
-            {monthLabel}
-          </p>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="size-12 shrink-0"
-            onClick={() => shiftMonth(1)}
-            aria-label="Next month"
-          >
-            <ChevronRight className="size-5" />
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
-          {WEEKDAYS.map((day) => (
-            <div
-              key={day}
-              className="pb-1 text-center text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground sm:text-sm"
+      <div className="grid gap-5 md:grid-cols-[minmax(0,1.35fr)_minmax(16rem,1fr)] md:items-start">
+        <div className="rounded-[1.5rem] border border-border bg-background/80 p-4 sm:p-5">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-12 shrink-0"
+              onClick={() => shiftMonth(-1)}
+              aria-label="Previous month"
             >
-              {day}
-            </div>
-          ))}
+              <ChevronLeft className="size-5" />
+            </Button>
+            <p className="font-display text-center text-3xl tracking-wide sm:text-4xl">
+              {monthLabel}
+            </p>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="size-12 shrink-0"
+              onClick={() => shiftMonth(1)}
+              aria-label="Next month"
+            >
+              <ChevronRight className="size-5" />
+            </Button>
+          </div>
 
-          {cells.map((day, index) => {
-            if (day === null) {
-              return <div key={`empty-${index}`} className="min-h-11 sm:min-h-14" />
-            }
-
-            const example = eventByDay.get(day)
-            const isSelected = selectedDay === day
-
-            return (
-              <button
+          <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+            {WEEKDAYS.map((day) => (
+              <div
                 key={day}
-                type="button"
-                onClick={() => setSelectedDay(day)}
-                className={cn(
-                  'relative flex min-h-11 flex-col items-center justify-center rounded-xl text-base font-semibold transition-colors sm:min-h-14 sm:text-lg',
-                  example
-                    ? 'bg-beige-soft text-foreground hover:bg-sage-soft'
-                    : 'text-foreground/80 hover:bg-beige-soft/60',
-                  isSelected && 'bg-primary text-primary-foreground hover:bg-primary',
-                )}
-                aria-pressed={isSelected}
-                aria-label={
-                  example
-                    ? `${day} ${monthLabel}, example event: ${example.title}`
-                    : `${day} ${monthLabel}`
-                }
+                className="pb-1 text-center text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground sm:text-sm"
               >
                 {day}
-                {example ? (
-                  <span
-                    className={cn(
-                      'mt-0.5 size-1.5 rounded-full',
-                      isSelected ? 'bg-primary-foreground' : 'bg-sage-deep',
-                    )}
-                    aria-hidden
-                  />
-                ) : null}
-              </button>
-            )
-          })}
-        </div>
-      </div>
+              </div>
+            ))}
 
-      <div className="rounded-[1.5rem] bg-beige-soft/70 px-5 py-5">
-        {selectedEvent ? (
-          <>
-            <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
-              Example event
-            </p>
-            <p className="mt-2 font-display text-3xl tracking-wide">
-              {selectedEvent.title}
-            </p>
-            <p className="mt-1 text-lg font-semibold text-foreground">
-              {selectedEvent.time}
-            </p>
-            <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              {selectedEvent.note}
-            </p>
-          </>
-        ) : (
-          <>
-            <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
-              Tip
-            </p>
-            <p className="mt-2 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Tap a highlighted day to see an example of how events will appear.
-              Real dates will be added when this feature launches.
-            </p>
-          </>
-        )}
+            {cells.map((day, index) => {
+              if (day === null) {
+                return <div key={`empty-${index}`} className="min-h-11 sm:min-h-14" />
+              }
+
+              const example = eventByDay.get(day)
+              const isSelected = selectedDay === day
+
+              return (
+                <button
+                  key={day}
+                  type="button"
+                  onClick={() => setSelectedDay(day)}
+                  className={cn(
+                    'relative flex min-h-11 flex-col items-center justify-center rounded-xl text-base font-semibold transition-colors sm:min-h-14 sm:text-lg',
+                    example
+                      ? 'bg-beige-soft text-foreground hover:bg-sage-soft'
+                      : 'text-foreground/80 hover:bg-beige-soft/60',
+                    isSelected && 'bg-primary text-primary-foreground hover:bg-primary',
+                  )}
+                  aria-pressed={isSelected}
+                  aria-label={
+                    example
+                      ? `${day} ${monthLabel}, example event: ${example.title}`
+                      : `${day} ${monthLabel}`
+                  }
+                >
+                  {day}
+                  {example ? (
+                    <span
+                      className={cn(
+                        'mt-0.5 size-1.5 rounded-full',
+                        isSelected ? 'bg-primary-foreground' : 'bg-sage-deep',
+                      )}
+                      aria-hidden
+                    />
+                  ) : null}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="rounded-[1.5rem] bg-beige-soft/70 px-5 py-5 md:min-h-full md:self-stretch">
+          {selectedEvent ? (
+            <>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
+                Example event
+              </p>
+              <p className="mt-2 font-display text-3xl tracking-wide">
+                {selectedEvent.title}
+              </p>
+              <p className="mt-1 text-lg font-semibold text-foreground">
+                {selectedEvent.time}
+              </p>
+              <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {selectedEvent.note}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
+                Tip
+              </p>
+              <p className="mt-2 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Tap a highlighted day to see an example of how events will appear.
+                Real dates will be added when this feature launches.
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

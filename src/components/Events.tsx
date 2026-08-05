@@ -30,7 +30,7 @@ const events: {
     key: 'coffee',
     date: 'Wednesday mornings',
     title: 'Village coffee & fellowship',
-    body: 'Our coffee mornings are open to everyone in the community — church family or not. A gentle, friendly space to pause midweek.',
+    body: 'Open to everyone in the village — a gentle midweek pause for tea, coffee, and good company.',
     image: eventTea,
     alt: 'Watercolor illustration of a welcoming tea set on a wooden table',
   },
@@ -142,17 +142,18 @@ export function Events() {
         open={active === 'coffee'}
         onClose={() => setActive(null)}
         title="Village coffee morning"
-        description="Pop in any Wednesday — you’re welcome whether you’ve been many times before or never once."
+        description="You’re warmly invited every Wednesday — whether it’s your first visit or you’re already part of the circle."
       >
         <div className="space-y-5">
           <p className="text-lg leading-relaxed text-foreground/90">
-            Coffee mornings are from <strong>10:30am</strong>. Come for a cuppa,
-            a biscuit, and a friendly chat with neighbours — church family or
-            not, it doesn’t matter.
+            We gather from <strong>10:30am</strong> for tea, coffee, and a
+            little something to eat. It’s a gentle midweek pause — time to
+            chat with neighbours and feel at home.
           </p>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Prefer to message ahead first? That’s absolutely fine. Let us know
-            you’re coming and we’ll look out for you.
+            If you’d like to message ahead, we’d love to hear from you. Let us
+            know you’re coming and we’ll make sure someone is there to welcome
+            you.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg" className="w-full sm:w-auto">
