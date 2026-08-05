@@ -1,16 +1,39 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { readContactPrefill } from '@/lib/contact-prefill'
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    function applyPrefill() {
+      const prefill = readContactPrefill()
+      if (!prefill) return
+      setSubmitted(false)
+      setMessage(prefill.message)
+      window.setTimeout(() => {
+        document.getElementById('message')?.focus()
+      }, 400)
+    }
+
+    applyPrefill()
+    window.addEventListener('gmc:contact-prefill', applyPrefill)
+    window.addEventListener('hashchange', applyPrefill)
+    return () => {
+      window.removeEventListener('gmc:contact-prefill', applyPrefill)
+      window.removeEventListener('hashchange', applyPrefill)
+    }
+  }, [])
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setSubmitted(true)
+    setMessage('')
   }
 
   return (
@@ -149,6 +172,8 @@ export function Contact() {
                     id="message"
                     name="message"
                     required
+                    value={message}
+                    onChange={(event) => setMessage(event.target.value)}
                     placeholder="How can we help?"
                   />
                 </div>

@@ -6,6 +6,7 @@ import eventWorship from '@/assets/event-worship.png'
 import { EventCalendar } from '@/components/EventCalendar'
 import { BrandDialog } from '@/components/ui/brand-dialog'
 import { Button } from '@/components/ui/button'
+import { goToContactForm } from '@/lib/contact-prefill'
 import { cn } from '@/lib/utils'
 
 type EventKey = 'worship' | 'coffee' | 'seasonal'
@@ -46,6 +47,28 @@ const events: {
 
 export function Events() {
   const [active, setActive] = useState<EventKey | null>(null)
+
+  function handleAskAboutEvent(event: {
+    title: string
+    date: string
+    time: string
+    note: string
+  }) {
+    setActive(null)
+    goToContactForm({
+      message: [
+        'Hello,',
+        '',
+        'I would like more information about this gathering:',
+        `${event.title}`,
+        `${event.date} · ${event.time}`,
+        '',
+        event.note,
+        '',
+        'Thank you.',
+      ].join('\n'),
+    })
+  }
 
   return (
     <section id="events" className="section-pad" aria-labelledby="events-heading">
@@ -180,10 +203,18 @@ export function Events() {
         title="Seasonal gatherings"
         description="Special services and village celebrations through the year — harvest, Christmas, and more."
         size="xl"
+        compact
+        topRight={
+          <div className="rounded-full border border-amber-700/15 bg-amber-50 px-3 py-1.5 shadow-sm">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.12em] text-amber-800">
+              Coming soon · mock example
+            </p>
+          </div>
+        }
       >
-        <EventCalendar />
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="w-full sm:w-auto">
+        <EventCalendar onAskAboutEvent={handleAskAboutEvent} />
+        <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+          <Button asChild size="default" className="h-11 w-full px-5 text-base sm:w-auto">
             <a href="#contact" onClick={() => setActive(null)}>
               Ask about events
             </a>
@@ -191,8 +222,8 @@ export function Events() {
           <Button
             type="button"
             variant="outline"
-            size="lg"
-            className="w-full sm:w-auto"
+            size="default"
+            className="h-11 w-full px-5 text-base sm:w-auto"
             onClick={() => setActive(null)}
           >
             Close

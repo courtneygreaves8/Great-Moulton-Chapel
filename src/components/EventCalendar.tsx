@@ -24,6 +24,15 @@ type CalendarEvent = {
   icon: LucideIcon
 }
 
+type EventCalendarProps = {
+  onAskAboutEvent?: (event: {
+    title: string
+    date: string
+    time: string
+    note: string
+  }) => void
+}
+
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 const CARD_COUNT = 6
 
@@ -177,7 +186,7 @@ function formatEventDate(year: number, event: CalendarEvent) {
   })
 }
 
-export function EventCalendar() {
+export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
   const today = new Date()
   const scrollerRef = useRef<HTMLDivElement>(null)
   const [monthCursor, setMonthCursor] = useState(
@@ -272,43 +281,22 @@ export function EventCalendar() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-2xl bg-sage-soft/80 px-5 py-4">
-        <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
-          Coming soon
-        </p>
-        <p className="mt-2 text-base leading-relaxed text-foreground sm:text-lg">
-          An events calendar is on the way. Move through the months to see how
-          gatherings will appear — example events update as you go.
-        </p>
-      </div>
-
+    <div className="space-y-4">
       <div>
-        <div className="mb-3 flex items-end justify-between gap-3">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
-              Key events
-            </p>
-            <p className="mt-1 text-base text-muted-foreground">
-              Example gatherings from this month onwards
-            </p>
-          </div>
-        </div>
-
         <div className="relative">
           <Button
             type="button"
             variant="outline"
             size="icon"
             className={cn(
-              'absolute top-1/2 left-0 z-10 size-12 -translate-x-1 -translate-y-1/2 bg-card shadow-sm sm:-translate-x-3',
+              'absolute top-1/2 left-0 z-10 size-10 -translate-x-1 -translate-y-1/2 bg-card shadow-sm sm:-translate-x-2',
               !canScrollLeft && 'pointer-events-none opacity-35',
             )}
             onClick={() => scrollCards(-1)}
             aria-label="Scroll key events left"
             disabled={!canScrollLeft}
           >
-            <ChevronLeft className="size-5" />
+            <ChevronLeft className="size-4" />
           </Button>
 
           <Button
@@ -316,19 +304,19 @@ export function EventCalendar() {
             variant="outline"
             size="icon"
             className={cn(
-              'absolute top-1/2 right-0 z-10 size-12 translate-x-1 -translate-y-1/2 bg-card shadow-sm sm:translate-x-3',
+              'absolute top-1/2 right-0 z-10 size-10 translate-x-1 -translate-y-1/2 bg-card shadow-sm sm:translate-x-2',
               !canScrollRight && 'pointer-events-none opacity-35',
             )}
             onClick={() => scrollCards(1)}
             aria-label="Scroll key events right"
             disabled={!canScrollRight}
           >
-            <ChevronRight className="size-5" />
+            <ChevronRight className="size-4" />
           </Button>
 
           <div
             ref={scrollerRef}
-            className="flex gap-4 overflow-x-auto scroll-smooth px-8 py-1 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:px-10 [&::-webkit-scrollbar]:hidden"
+            className="flex gap-3 overflow-x-auto scroll-smooth px-7 py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory sm:px-9 [&::-webkit-scrollbar]:hidden"
           >
             {visibleCards.map((event, index) => {
               const eventYear = Number(event.id.slice(0, 4))
@@ -347,7 +335,7 @@ export function EventCalendar() {
                   type="button"
                   onClick={() => selectCard(event)}
                   className={cn(
-                    'snap-start shrink-0 w-[min(78vw,17.5rem)] rounded-[1.5rem] border p-5 text-left transition-all',
+                    'snap-start shrink-0 w-[min(72vw,14.5rem)] rounded-[1.25rem] border p-3.5 text-left transition-all',
                     tone,
                     isActive
                       ? 'border-primary ring-2 ring-primary/25'
@@ -355,22 +343,22 @@ export function EventCalendar() {
                   )}
                   aria-pressed={isActive}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-background/80 text-sage-deep shadow-[inset_0_0_0_1px_rgba(100,93,86,0.06)]">
-                      <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="inline-flex size-9 items-center justify-center rounded-xl bg-background/80 text-sage-deep shadow-[inset_0_0_0_1px_rgba(100,93,86,0.06)]">
+                      <Icon className="size-4" strokeWidth={1.75} aria-hidden />
                     </span>
-                    <span className="rounded-full bg-background/75 px-2.5 py-1 text-xs font-bold uppercase tracking-[0.12em] text-sage-deep">
+                    <span className="rounded-full bg-background/75 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-sage-deep">
                       {formatEventDate(eventYear, event)}
                     </span>
                   </div>
 
-                  <p className="mt-5 font-display text-[1.85rem] leading-[0.95] tracking-wide text-foreground">
+                  <p className="mt-3 font-display text-[1.45rem] leading-[0.95] tracking-wide text-foreground">
                     {event.title}
                   </p>
-                  <p className="mt-3 text-base font-semibold text-foreground">
+                  <p className="mt-1.5 text-sm font-semibold text-foreground">
                     {event.time}
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                     {event.note}
                   </p>
                 </button>
@@ -380,39 +368,39 @@ export function EventCalendar() {
         </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,18rem)] lg:items-start">
-        <div className="rounded-[1.5rem] border border-border bg-background/80 p-4 sm:p-5">
-          <div className="mb-4 flex items-center justify-between gap-3">
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(12rem,15rem)] lg:items-start">
+        <div className="rounded-[1.25rem] border border-border bg-background/80 p-3 sm:p-4">
+          <div className="mb-2.5 flex items-center justify-between gap-2">
             <Button
               type="button"
               variant="outline"
               size="icon"
-              className="size-12 shrink-0"
+              className="size-10 shrink-0"
               onClick={() => shiftMonth(-1)}
               aria-label="Previous month"
             >
-              <ChevronLeft className="size-5" />
+              <ChevronLeft className="size-4" />
             </Button>
-            <p className="font-display text-center text-3xl tracking-wide sm:text-4xl">
+            <p className="font-display text-center text-2xl tracking-wide sm:text-3xl">
               {monthLabel}
             </p>
             <Button
               type="button"
               variant="outline"
               size="icon"
-              className="size-12 shrink-0"
+              className="size-10 shrink-0"
               onClick={() => shiftMonth(1)}
               aria-label="Next month"
             >
-              <ChevronRight className="size-5" />
+              <ChevronRight className="size-4" />
             </Button>
           </div>
 
-          <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
+          <div className="grid grid-cols-7 gap-1">
             {WEEKDAYS.map((day) => (
               <div
                 key={day}
-                className="pb-1 text-center text-[0.7rem] font-bold uppercase tracking-[0.12em] text-muted-foreground sm:text-xs"
+                className="pb-0.5 text-center text-[0.65rem] font-bold uppercase tracking-[0.1em] text-muted-foreground"
               >
                 {day}
               </div>
@@ -420,7 +408,7 @@ export function EventCalendar() {
 
             {cells.map((day, index) => {
               if (day === null) {
-                return <div key={`empty-${index}`} className="min-h-12 sm:min-h-14" />
+                return <div key={`empty-${index}`} className="min-h-9 sm:min-h-10" />
               }
 
               const example = eventByDay.get(day)
@@ -435,7 +423,7 @@ export function EventCalendar() {
                   type="button"
                   onClick={() => selectDay(day)}
                   className={cn(
-                    'relative flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-sm font-semibold transition-colors sm:min-h-14 sm:text-base',
+                    'relative flex min-h-9 flex-col items-center justify-center gap-0 rounded-lg px-0.5 py-0.5 text-xs font-semibold transition-colors sm:min-h-10 sm:text-sm',
                     example
                       ? 'bg-beige-soft text-foreground hover:bg-sage-soft'
                       : 'text-foreground/80 hover:bg-beige-soft/60',
@@ -452,14 +440,14 @@ export function EventCalendar() {
                   {Icon ? (
                     <Icon
                       className={cn(
-                        'size-3.5',
+                        'size-2.5',
                         isSelected ? 'text-primary-foreground' : 'text-sage-deep',
                       )}
                       aria-hidden
                       strokeWidth={2}
                     />
                   ) : (
-                    <span className="size-3.5" aria-hidden />
+                    <span className="size-2.5" aria-hidden />
                   )}
                 </button>
               )
@@ -467,29 +455,49 @@ export function EventCalendar() {
           </div>
         </div>
 
-        <div className="rounded-[1.5rem] bg-beige-soft/70 px-5 py-5 lg:min-h-full lg:self-stretch">
+        <div className="rounded-[1.25rem] bg-beige-soft/70 px-4 py-4 lg:min-h-full lg:self-stretch">
           {selectedEvent && !selectedId?.startsWith('empty-') ? (
             <>
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-sage-deep">
                 Selected
               </p>
-              <p className="mt-2 font-display text-3xl tracking-wide">
+              <p className="mt-1.5 font-display text-2xl tracking-wide">
                 {selectedEvent.title}
               </p>
-              <p className="mt-1 text-lg font-semibold text-foreground">
+              <p className="mt-1 text-sm font-semibold text-foreground">
                 {formatEventDate(Number(selectedEvent.id.slice(0, 4)), selectedEvent)} ·{' '}
                 {selectedEvent.time}
               </p>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {selectedEvent.note}
               </p>
+              {onAskAboutEvent ? (
+                <Button
+                  type="button"
+                  size="default"
+                  className="mt-4 h-10 w-full px-4 text-sm sm:w-auto"
+                  onClick={() =>
+                    onAskAboutEvent({
+                      title: selectedEvent.title,
+                      date: formatEventDate(
+                        Number(selectedEvent.id.slice(0, 4)),
+                        selectedEvent,
+                      ),
+                      time: selectedEvent.time,
+                      note: selectedEvent.note,
+                    })
+                  }
+                >
+                  Ask for more info
+                </Button>
+              ) : null}
             </>
           ) : (
             <>
-              <p className="text-sm font-bold uppercase tracking-[0.14em] text-sage-deep">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-sage-deep">
                 Tip
               </p>
-              <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                 Choose a highlighted day or a key event card to preview how
                 gatherings will appear here.
               </p>

@@ -10,6 +10,8 @@ type BrandDialogProps = {
   children: ReactNode
   className?: string
   size?: 'md' | 'lg' | 'xl'
+  compact?: boolean
+  topRight?: ReactNode
 }
 
 export function BrandDialog({
@@ -20,6 +22,8 @@ export function BrandDialog({
   children,
   className,
   size = 'md',
+  compact = false,
+  topRight,
 }: BrandDialogProps) {
   const titleId = useId()
   const descId = useId()
@@ -58,10 +62,12 @@ export function BrandDialog({
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
         className={cn(
-          'relative z-10 max-h-[90svh] w-full overflow-y-auto rounded-[1.75rem] border border-border bg-card p-6 shadow-[0_28px_60px_-24px_rgba(100,93,86,0.45)] sm:p-8',
+          'relative z-10 max-h-[90svh] w-full overflow-y-auto rounded-[1.75rem] border border-border bg-card shadow-[0_28px_60px_-24px_rgba(100,93,86,0.45)]',
+          compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8',
           size === 'md' && 'max-w-lg',
           size === 'lg' && 'max-w-2xl',
           size === 'xl' && 'max-w-6xl',
+          compact && 'overflow-hidden',
           className,
         )}
       >
@@ -74,31 +80,52 @@ export function BrandDialog({
           aria-hidden
         />
 
+        {topRight ? (
+          <div
+            className={cn(
+              'absolute z-10',
+              compact ? 'top-2.5 right-12' : 'top-3 right-14',
+            )}
+          >
+            {topRight}
+          </div>
+        ) : null}
+
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 flex size-12 items-center justify-center rounded-full text-muted-foreground transition hover:bg-beige-soft hover:text-foreground"
+          className={cn(
+            'absolute z-10 flex items-center justify-center rounded-full text-muted-foreground transition hover:bg-beige-soft hover:text-foreground',
+            compact ? 'top-2.5 right-2.5 size-10' : 'top-3 right-3 size-12',
+          )}
           aria-label="Close dialog"
         >
-          <X className="size-5" strokeWidth={2} />
+          <X className={compact ? 'size-4' : 'size-5'} strokeWidth={2} />
         </button>
 
         <div className="relative">
           <h2
             id={titleId}
-            className="pr-12 font-display text-4xl tracking-wide text-foreground sm:text-5xl"
+            className={cn(
+              'font-display tracking-wide text-foreground',
+              topRight ? 'pr-44 sm:pr-52' : 'pr-12',
+              compact ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl',
+            )}
           >
             {title}
           </h2>
           {description ? (
             <p
               id={descId}
-              className="mt-4 text-lg leading-relaxed text-muted-foreground"
+              className={cn(
+                'leading-relaxed text-muted-foreground',
+                compact ? 'mt-2 text-base' : 'mt-4 text-lg',
+              )}
             >
               {description}
             </p>
           ) : null}
-          <div className="mt-6">{children}</div>
+          <div className={compact ? 'mt-4' : 'mt-6'}>{children}</div>
         </div>
       </div>
     </div>
