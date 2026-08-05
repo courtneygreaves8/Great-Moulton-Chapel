@@ -28,12 +28,14 @@ function App() {
   useEffect(() => {
     document.getElementById('boot-loader')?.remove()
     document.documentElement.classList.remove('boot-loading')
+    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {
     if (phase !== 'loading') return
 
     document.body.style.overflow = 'hidden'
+    window.scrollTo(0, 0)
     const exitTimer = window.setTimeout(() => setPhase('exiting'), 2800)
 
     return () => {
