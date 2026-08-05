@@ -179,7 +179,7 @@ export function Events() {
         onClose={() => setActive(null)}
         title="Seasonal gatherings"
         description="Special services and village celebrations through the year — harvest, Christmas, and more."
-        size="lg"
+        size="xl"
       >
         <EventCalendar />
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">

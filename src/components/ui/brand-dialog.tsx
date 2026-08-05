@@ -9,7 +9,7 @@ type BrandDialogProps = {
   description?: string
   children: ReactNode
   className?: string
-  size?: 'md' | 'lg'
+  size?: 'md' | 'lg' | 'xl'
 }
 
 export function BrandDialog({
@@ -61,6 +61,7 @@ export function BrandDialog({
           'relative z-10 max-h-[90svh] w-full overflow-y-auto rounded-[1.75rem] border border-border bg-card p-6 shadow-[0_28px_60px_-24px_rgba(100,93,86,0.45)] sm:p-8',
           size === 'md' && 'max-w-lg',
           size === 'lg' && 'max-w-2xl',
+          size === 'xl' && 'max-w-6xl',
           className,
         )}
       >
