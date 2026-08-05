@@ -16,7 +16,7 @@ export function Hero({ introReady = true }: HeroProps) {
         <div className="mx-auto w-full max-w-3xl px-1 text-center">
           <h1
             className={cn(
-              'mx-auto max-w-full text-[clamp(2.725rem,9.5vw,5.5rem)] leading-[0.95] break-words hyphens-none',
+              'mx-auto max-w-full text-[2.95rem] leading-[0.95] break-words hyphens-none sm:text-[clamp(2.75rem,9.5vw,5.5rem)]',
               introReady ? 'hero-rise' : 'hero-intro-hidden',
             )}
           >
