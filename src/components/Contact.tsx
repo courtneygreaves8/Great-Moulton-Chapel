@@ -156,8 +156,8 @@ export function Contact() {
                   Send message
                 </Button>
                 <p className="text-base text-muted-foreground">
-                  This form is a simple demo for now — messages aren’t emailed
-                  yet. Please use phone or email above if you need a reply soon.
+                  Prefer a quick reply? Call or email using the details on the
+                  left — we’ll get back to you as soon as we can.
                 </p>
               </form>
             )}

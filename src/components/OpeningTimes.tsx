@@ -1,5 +1,4 @@
-import { ArrowUpRight, Church, Coffee, type LucideIcon, MessageCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Church, Coffee, type LucideIcon, MessageCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const openingCards: {
@@ -51,7 +50,7 @@ export function OpeningTimes() {
               <article
                 key={card.title}
                 className={cn(
-                  'relative flex min-h-44 flex-col justify-between rounded-[2rem] p-6 sm:min-h-56 sm:rounded-[2.25rem] sm:p-8',
+                  'flex min-h-44 flex-col justify-between rounded-[2rem] p-6 sm:min-h-56 sm:rounded-[2.25rem] sm:p-8',
                   card.tone === 'soft' &&
                     'bg-card text-foreground shadow-[0_1px_0_rgba(100,93,86,0.06)]',
                   card.tone === 'sage' && 'bg-sage-soft text-foreground',
@@ -98,18 +97,6 @@ export function OpeningTimes() {
                   </p>
                 </div>
 
-                {card.tone === 'dark' && (
-                  <Button
-                    asChild
-                    size="icon"
-                    className="absolute bottom-6 right-6 size-12 bg-card text-foreground hover:bg-beige-soft"
-                    aria-label="Contact us"
-                  >
-                    <a href="#contact">
-                      <ArrowUpRight className="size-5" />
-                    </a>
-                  </Button>
-                )}
               </article>
             )
           })}

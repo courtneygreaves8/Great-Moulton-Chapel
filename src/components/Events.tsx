@@ -1,33 +1,52 @@
+import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import eventChristmas from '@/assets/event-christmas.png'
 import eventTea from '@/assets/event-tea.png'
 import eventWorship from '@/assets/event-worship.png'
+import { EventCalendar } from '@/components/EventCalendar'
+import { BrandDialog } from '@/components/ui/brand-dialog'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
-const events = [
+type EventKey = 'worship' | 'coffee' | 'seasonal'
+
+const events: {
+  key: EventKey
+  date: string
+  title: string
+  body: string
+  image: string
+  alt: string
+}[] = [
   {
+    key: 'worship',
     date: 'Sunday services',
     title: 'Weekly worship together',
     body: 'Join us each Sunday morning for worship, prayer, and a short message. Stay afterwards for a warm drink and conversation.',
     image: eventWorship,
-    href: '#meetings',
+    alt: 'Watercolor illustration of hands raised in worship in a chapel',
   },
   {
+    key: 'coffee',
     date: 'Wednesday mornings',
     title: 'Village coffee & fellowship',
     body: 'Our coffee mornings are open to everyone in the community — church family or not. A gentle, friendly space to pause midweek.',
     image: eventTea,
-    href: '#opening-times',
+    alt: 'Watercolor illustration of a welcoming tea set on a wooden table',
   },
   {
+    key: 'seasonal',
     date: 'Coming soon',
     title: 'Seasonal gatherings',
-    body: 'Special services and village events are shared here as they’re planned — harvest, Christmas, and other moments through the year.',
+    body: 'Look out for harvest, Christmas, and other special services through the year — warm gatherings for the whole village to share.',
     image: eventChristmas,
-    href: '#contact',
+    alt: 'Watercolor illustration of a simple Christmas candle, evergreen sprig, and ribbon',
   },
 ]
 
 export function Events() {
+  const [active, setActive] = useState<EventKey | null>(null)
+
   return (
     <section id="events" className="section-pad" aria-labelledby="events-heading">
       <div className="content-width">
@@ -37,16 +56,23 @@ export function Events() {
             News &amp; events
           </h2>
           <p className="mt-5 text-xl leading-relaxed text-muted-foreground">
-            A few notes from chapel life — kept short and easy to scan.
+            From Sunday worship to midweek coffee and seasonal celebrations —
+            here’s what you can join in with at the chapel.
           </p>
         </div>
 
         <div className="mt-12 space-y-5">
           {events.map((event) => (
-            <a
-              key={event.title}
-              href={event.href}
-              className="group grid overflow-hidden rounded-[2rem] bg-card shadow-[0_1px_0_rgba(100,93,86,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-beige-soft/50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/35 sm:grid-cols-[12rem_1fr_auto] sm:rounded-[2.25rem]"
+            <button
+              key={event.key}
+              type="button"
+              onClick={() => setActive(event.key)}
+              className={cn(
+                'group grid w-full overflow-hidden rounded-[2rem] bg-card text-left shadow-[0_1px_0_rgba(100,93,86,0.06)] transition-all duration-300',
+                'hover:-translate-y-0.5 hover:bg-beige-soft/50',
+                'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/35',
+                'sm:grid-cols-[12rem_1fr_auto] sm:rounded-[2.25rem]',
+              )}
             >
               <img
                 src={event.image}
@@ -70,10 +96,108 @@ export function Events() {
                   <ArrowUpRight className="size-5" />
                 </span>
               </div>
-            </a>
+              <span className="sr-only">Open details for {event.title}</span>
+            </button>
           ))}
         </div>
       </div>
+
+      <BrandDialog
+        open={active === 'worship'}
+        onClose={() => setActive(null)}
+        title="Sunday services"
+        description="You’re warmly welcome — just come along on Sunday morning. There’s no need to know anyone first, and no special clothes required."
+      >
+        <div className="space-y-5">
+          <p className="text-lg leading-relaxed text-foreground/90">
+            Services begin at <strong>10:30am</strong>. Stay afterwards for a
+            drink and a chat if you’d like — or slip away quietly whenever you
+            need to.
+          </p>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            If you’d feel more comfortable messaging ahead, please do. We’re
+            happy to arrange for someone to greet you at the door and help you
+            settle in.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <a href="#contact" onClick={() => setActive(null)}>
+                Message ahead
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={() => setActive(null)}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </BrandDialog>
+
+      <BrandDialog
+        open={active === 'coffee'}
+        onClose={() => setActive(null)}
+        title="Village coffee morning"
+        description="Pop in any Wednesday — you’re welcome whether you’ve been many times before or never once."
+      >
+        <div className="space-y-5">
+          <p className="text-lg leading-relaxed text-foreground/90">
+            Coffee mornings are from <strong>10:30am</strong>. Come for a cuppa,
+            a biscuit, and a friendly chat with neighbours — church family or
+            not, it doesn’t matter.
+          </p>
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            Prefer to message ahead first? That’s absolutely fine. Let us know
+            you’re coming and we’ll look out for you.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <a href="#contact" onClick={() => setActive(null)}>
+                Message ahead
+              </a>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+              onClick={() => setActive(null)}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </BrandDialog>
+
+      <BrandDialog
+        open={active === 'seasonal'}
+        onClose={() => setActive(null)}
+        title="Seasonal gatherings"
+        description="Special services and village celebrations through the year — harvest, Christmas, and more."
+        size="lg"
+      >
+        <EventCalendar />
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Button asChild size="lg" className="w-full sm:w-auto">
+            <a href="#contact" onClick={() => setActive(null)}>
+              Ask about events
+            </a>
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="w-full sm:w-auto"
+            onClick={() => setActive(null)}
+          >
+            Close
+          </Button>
+        </div>
+      </BrandDialog>
     </section>
   )
 }

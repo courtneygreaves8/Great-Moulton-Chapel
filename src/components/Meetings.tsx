@@ -32,7 +32,8 @@ export function Meetings() {
             Meetings &amp; gatherings
           </h2>
           <p className="mt-5 text-xl leading-relaxed text-muted-foreground">
-            Our weekly rhythm is kept simple so it’s easy to join in.
+            Two regular gatherings each week — come along whenever you can, and
+            stay for a chat if you’d like.
           </p>
         </div>
 

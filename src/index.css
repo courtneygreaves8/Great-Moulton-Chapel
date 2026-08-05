@@ -3,6 +3,7 @@
 @theme inline {
   --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
   --font-sans: "Atkinson Hyperlegible", "Segoe UI", sans-serif;
+  --font-script: "Caveat", "Segoe Script", cursive;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -139,6 +140,36 @@
     font-family: var(--font-sans);
   }
 
+  .font-script {
+    font-family: var(--font-script);
+  }
+
+  .loader-enter {
+    animation: loader-fade-in 0.4s ease-out both;
+  }
+
+  .loader-exit {
+    animation: loader-slide-up 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+
+  .loader-sign {
+    animation: loader-sign-in 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  }
+
+  .page-await {
+    transform: translateY(48px);
+    opacity: 0.01;
+  }
+
+  .page-reveal {
+    animation: page-slide-up 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .page-settled {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .section-pad {
     @apply px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24;
   }
@@ -190,6 +221,46 @@
   from {
     opacity: 0;
     transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loader-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loader-sign-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loader-slide-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes page-slide-up {
+  from {
+    opacity: 0.01;
+    transform: translateY(48px);
   }
   to {
     opacity: 1;
