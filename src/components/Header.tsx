@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type MouseEvent } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { openEventsCalendar } from '@/lib/events-calendar'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '#welcome', label: 'Welcome' },
   { href: '#meetings', label: 'Meetings' },
-  { href: '#events', label: 'Events' },
+  { href: '#events', label: 'Events', opensCalendar: true },
   { href: '#opening-times', label: 'Times' },
   { href: '#contact', label: 'Contact' },
 ]
@@ -28,6 +29,16 @@ export function Header() {
       document.body.style.overflow = ''
     }
   }, [open])
+
+  function handleNavClick(
+    event: MouseEvent<HTMLAnchorElement>,
+    item: (typeof navItems)[number],
+  ) {
+    setOpen(false)
+    if (!item.opensCalendar) return
+    event.preventDefault()
+    openEventsCalendar()
+  }
 
   return (
     <header
@@ -54,7 +65,12 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="nav-link">
+            <a
+              key={item.href}
+              href={item.href}
+              className="nav-link"
+              onClick={(event) => handleNavClick(event, item)}
+            >
               {item.label}
             </a>
           ))}
@@ -87,7 +103,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               className="rounded-2xl px-4 py-4 text-xl font-semibold text-foreground transition-colors hover:bg-accent"
-              onClick={() => setOpen(false)}
+              onClick={(event) => handleNavClick(event, item)}
             >
               {item.label}
             </a>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import eventChristmas from '@/assets/event-christmas.png'
 import eventTea from '@/assets/event-tea.png'
@@ -47,6 +47,16 @@ const events: {
 
 export function Events() {
   const [active, setActive] = useState<EventKey | null>(null)
+
+  useEffect(() => {
+    function openCalendar() {
+      setActive('seasonal')
+    }
+    window.addEventListener('gmc:open-events-calendar', openCalendar)
+    return () => {
+      window.removeEventListener('gmc:open-events-calendar', openCalendar)
+    }
+  }, [])
 
   function handleAskAboutEvent(event: {
     title: string
