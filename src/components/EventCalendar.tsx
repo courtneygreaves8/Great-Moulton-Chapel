@@ -29,7 +29,6 @@ type EventCalendarProps = {
     title: string
     date: string
     time: string
-    note: string
   }) => void
 }
 
@@ -504,7 +503,6 @@ export function EventCalendar({ onAskAboutEvent }: EventCalendarProps) {
                         selectedEvent,
                       ),
                       time: selectedEvent.time,
-                      note: selectedEvent.note,
                     })
                   }
                 >

@@ -62,7 +62,6 @@ export function Events() {
     title: string
     date: string
     time: string
-    note: string
   }) {
     setActive(null)
     goToContactForm({
@@ -70,11 +69,7 @@ export function Events() {
       message: [
         'Hello,',
         '',
-        'I would like more information about this gathering:',
-        `${event.title}`,
-        `${event.date} · ${event.time}`,
-        '',
-        event.note,
+        `I’d like to know more about ${event.title} on ${event.date} at ${event.time}.`,
         '',
         'Thank you.',
       ].join('\n'),

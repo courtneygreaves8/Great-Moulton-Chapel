@@ -51,12 +51,12 @@ export function Hero({ introReady = true }: HeroProps) {
 
           <a
             href="#opening-times"
-            className="absolute bottom-0 left-1/2 z-10 flex w-[calc(100%-1rem)] max-w-xl -translate-x-1/2 translate-y-1/2 items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:w-auto sm:max-w-[calc(100%-1.5rem)] sm:gap-4 sm:px-6 sm:py-3"
+            className="absolute bottom-0 left-1/2 z-10 flex w-[calc(100%-1rem)] max-w-xl -translate-x-1/2 translate-y-1/2 items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:w-auto sm:max-w-2xl sm:gap-4 sm:px-6 sm:py-3 md:max-w-3xl md:gap-5 md:px-8 md:py-4"
           >
-            <span className="shrink-0 rounded-full bg-sage-soft px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-foreground sm:px-3 sm:text-xs">
+            <span className="shrink-0 rounded-full bg-sage-soft px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-foreground sm:px-3 sm:text-xs md:px-3.5 md:py-1.5 md:text-sm">
               Open
             </span>
-            <p className="min-w-0 flex-1 text-left text-sm font-semibold leading-snug sm:text-base">
+            <p className="min-w-0 flex-1 text-left text-sm font-semibold leading-snug sm:text-base md:text-lg">
               Coffee mornings every Wednesday at 10:30am — all welcome
             </p>
           </a>
