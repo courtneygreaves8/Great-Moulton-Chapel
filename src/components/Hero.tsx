@@ -53,10 +53,15 @@ export function Hero({
         <div
           className={cn(
             'relative mt-10 w-full sm:mt-12',
-            mediaReady ? 'hero-rise' : 'hero-intro-hidden',
+            !mediaReady && 'pointer-events-none',
           )}
         >
-          <div className="overflow-hidden rounded-[2rem] bg-[color-mix(in_srgb,var(--linen-soft)_70%,#dfe8f0)] sm:rounded-[2.5rem]">
+          <div
+            className={cn(
+              'overflow-hidden rounded-[2rem] bg-[color-mix(in_srgb,var(--linen-soft)_70%,#dfe8f0)] sm:rounded-[2.5rem]',
+              mediaReady ? 'hero-media-enter' : 'hero-media-hidden',
+            )}
+          >
             <img
               src={chapelIllustration}
               alt="Watercolor illustration of Great Moulton Chapel"
@@ -66,7 +71,10 @@ export function Hero({
 
           <a
             href="#opening-times"
-            className="absolute bottom-0 left-1/2 z-10 flex w-[calc(100%-1rem)] max-w-xl -translate-x-1/2 translate-y-1/2 items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:w-auto sm:max-w-2xl sm:gap-4 sm:px-6 sm:py-3 md:max-w-3xl md:gap-5 md:px-8 md:py-4"
+            className={cn(
+              'absolute bottom-0 left-1/2 z-10 flex w-[calc(100%-1rem)] max-w-xl -translate-x-1/2 translate-y-1/2 items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:w-auto sm:max-w-2xl sm:gap-4 sm:px-6 sm:py-3 md:max-w-3xl md:gap-5 md:px-8 md:py-4',
+              mediaReady ? 'hero-pill-enter' : 'hero-media-hidden',
+            )}
           >
             <span className="shrink-0 rounded-full bg-sage-soft px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-foreground sm:px-3 sm:text-xs md:px-3.5 md:py-1.5 md:text-sm">
               Open

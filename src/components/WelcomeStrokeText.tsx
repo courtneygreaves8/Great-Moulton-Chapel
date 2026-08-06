@@ -38,16 +38,14 @@ export function WelcomeStrokeText({ className }: WelcomeStrokeTextProps) {
       }
 
       if (reduced) {
-        svg.classList.add('welcome-stroke-filled')
         for (const path of paths) {
           path.style.strokeDashoffset = '0'
         }
         return
       }
 
-      // Letter-by-letter write, then soft fill — same feel as the old script loader
+      // Letter-by-letter stroke write — stays as outline (no fill)
       const perGlyph = 120
-      const drawDuration = 380
 
       paths.forEach((path, index) => {
         const delay = 140 + index * perGlyph
@@ -57,13 +55,6 @@ export function WelcomeStrokeText({ className }: WelcomeStrokeTextProps) {
           }, delay),
         )
       })
-
-      const fillAt = 140 + (paths.length - 1) * perGlyph + drawDuration + 160
-      timers.push(
-        window.setTimeout(() => {
-          svg.classList.add('welcome-stroke-filled')
-        }, fillAt),
-      )
     }
 
     void run()

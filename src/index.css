@@ -200,6 +200,19 @@
     animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
+  .hero-media-hidden {
+    opacity: 0;
+    transform: translateY(36px) scale(0.985);
+  }
+
+  .hero-media-enter {
+    animation: hero-media-enter 1.45s cubic-bezier(0.22, 0.82, 0.28, 1) both;
+  }
+
+  .hero-pill-enter {
+    animation: hero-pill-enter 1.1s cubic-bezier(0.22, 0.82, 0.28, 1) 0.35s both;
+  }
+
   .section-pad {
     @apply min-w-0 px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24;
   }
@@ -284,10 +297,36 @@
   }
 }
 
+@keyframes hero-media-enter {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scale(0.985);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes hero-pill-enter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(50% + 18px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .loader-bg-exit,
   .loader-welcome-exit,
   .hero-rise,
+  .hero-media-enter,
+  .hero-pill-enter,
   .fade-up,
   .fade-up-delay-1,
   .fade-up-delay-2,
@@ -295,10 +334,17 @@
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
 
-  .hero-intro-hidden {
+  .hero-intro-hidden,
+  .hero-media-hidden {
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+
+  .hero-pill-enter {
+    transform: translate(-50%, 50%) !important;
   }
 }

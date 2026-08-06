@@ -232,7 +232,7 @@ export function WelcomeLoader({
       <div className="relative flex w-full max-w-3xl flex-col items-center px-5 text-center">
         <WelcomeStrokeText
           className={cn(
-            'relative w-[min(90vw,40rem)]',
+            'relative w-[min(45vw,calc(20rem-6px))]',
             welcomeOut && 'loader-welcome-exit',
           )}
         />

@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils'
 type LoadPhase = 'loading' | 'revealing' | 'done'
 
 const COPY_DELAY_MS = 120
-const MEDIA_DELAY_MS = 320
+const MEDIA_AFTER_COPY_MS = 750
 
 function App() {
   const [phase, setPhase] = useState<LoadPhase>(() =>
@@ -51,8 +51,10 @@ function App() {
 
   const handleHeadingSettled = useCallback(() => {
     setTitleSettled(true)
-    window.setTimeout(() => setCopyReady(true), COPY_DELAY_MS)
-    window.setTimeout(() => setMediaReady(true), MEDIA_DELAY_MS)
+    window.setTimeout(() => {
+      setCopyReady(true)
+      window.setTimeout(() => setMediaReady(true), MEDIA_AFTER_COPY_MS)
+    }, COPY_DELAY_MS)
   }, [])
 
   const handleComplete = useCallback(() => {
