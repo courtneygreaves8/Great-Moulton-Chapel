@@ -70,7 +70,7 @@ export function Hero({
             />
           </div>
 
-          <div className="absolute bottom-0 left-1/2 z-10 w-[calc(100%-1rem)] max-w-xl -translate-x-1/2 translate-y-1/2 sm:w-auto sm:max-w-2xl md:max-w-3xl">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex translate-y-1/2 justify-center px-2">
             <a
               href="#events"
               onClick={(event) => {
@@ -78,7 +78,7 @@ export function Hero({
                 openCoffeeDialog()
               }}
               className={cn(
-                'flex w-full items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:gap-4 sm:px-6 sm:py-3 md:gap-5 md:px-8 md:py-4',
+                'pointer-events-auto flex w-full max-w-xl items-center gap-2.5 rounded-full bg-primary/90 px-3.5 py-2.5 text-primary-foreground shadow-sm backdrop-blur-sm transition-colors duration-300 hover:bg-primary sm:w-auto sm:max-w-2xl sm:gap-4 sm:px-6 sm:py-3 md:max-w-3xl md:gap-5 md:px-8 md:py-4',
                 mediaReady ? 'hero-pill-enter' : 'hero-pill-hidden',
               )}
             >
