@@ -52,9 +52,14 @@ export function Events() {
     function openCalendar() {
       setActive('seasonal')
     }
+    function openCoffee() {
+      setActive('coffee')
+    }
     window.addEventListener('gmc:open-events-calendar', openCalendar)
+    window.addEventListener('gmc:open-coffee-dialog', openCoffee)
     return () => {
       window.removeEventListener('gmc:open-events-calendar', openCalendar)
+      window.removeEventListener('gmc:open-coffee-dialog', openCoffee)
     }
   }, [])
 
