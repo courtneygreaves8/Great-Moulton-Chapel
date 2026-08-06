@@ -2,10 +2,22 @@ import chapelIllustration from '@/assets/chapel-watercolor.png'
 import { cn } from '@/lib/utils'
 
 type HeroProps = {
-  introReady?: boolean
+  /** Shared heading is being shown / moved by the loader intro */
+  titleReady?: boolean
+  /** Heading has docked into the hero layout */
+  titleSettled?: boolean
+  /** Subcopy can animate in */
+  copyReady?: boolean
+  /** Image + open pill can animate in */
+  mediaReady?: boolean
 }
 
-export function Hero({ introReady = true }: HeroProps) {
+export function Hero({
+  titleReady = true,
+  titleSettled = true,
+  copyReady = true,
+  mediaReady = true,
+}: HeroProps) {
   return (
     <section
       id="top"
@@ -14,20 +26,23 @@ export function Hero({ introReady = true }: HeroProps) {
     >
       <div className="content-width">
         <div className="mx-auto w-full max-w-3xl px-1 text-center">
-          <h1
-            className={cn(
-              'mx-auto max-w-full text-[2.95rem] leading-[0.95] break-words hyphens-none sm:text-[clamp(2.75rem,9.5vw,5.5rem)]',
-              introReady ? 'hero-rise' : 'hero-intro-hidden',
-            )}
-          >
-            Great Moulton
-            <br />
-            Chapel
-          </h1>
+          <div id="hero-brand-slot" className="mx-auto w-full">
+            <h1
+              id="hero-brand"
+              className={cn(
+                'mx-auto max-w-full text-[2.95rem] leading-[0.95] break-words hyphens-none sm:text-[clamp(2.75rem,9.5vw,5.5rem)]',
+                !titleReady && !titleSettled && 'opacity-0',
+              )}
+            >
+              Great Moulton
+              <br />
+              Chapel
+            </h1>
+          </div>
           <p
             className={cn(
               'mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground sm:mt-8 sm:text-2xl',
-              introReady ? 'hero-rise-delay-1' : 'hero-intro-hidden',
+              copyReady ? 'hero-rise' : 'hero-intro-hidden',
             )}
           >
             A friendly village chapel — Sunday worship, midweek coffee, and a
@@ -38,7 +53,7 @@ export function Hero({ introReady = true }: HeroProps) {
         <div
           className={cn(
             'relative mt-10 w-full sm:mt-12',
-            introReady ? 'hero-rise-delay-2' : 'hero-intro-hidden',
+            mediaReady ? 'hero-rise' : 'hero-intro-hidden',
           )}
         >
           <div className="overflow-hidden rounded-[2rem] bg-[color-mix(in_srgb,var(--linen-soft)_70%,#dfe8f0)] sm:rounded-[2.5rem]">

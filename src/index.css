@@ -149,8 +149,12 @@
     font-family: var(--font-script);
   }
 
-  .loader-exit {
-    animation: loader-fade-out 0.9s ease-in-out both;
+  .loader-bg-exit {
+    animation: loader-fade-out 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .loader-welcome-exit {
+    animation: loader-fade-out 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
   }
 
   .welcome-stroke-host {
@@ -193,15 +197,7 @@
   }
 
   .hero-rise {
-    animation: hero-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
-  }
-
-  .hero-rise-delay-1 {
-    animation: hero-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
-  }
-
-  .hero-rise-delay-2 {
-    animation: hero-rise 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+    animation: hero-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .section-pad {
@@ -285,5 +281,24 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-bg-exit,
+  .loader-welcome-exit,
+  .hero-rise,
+  .fade-up,
+  .fade-up-delay-1,
+  .fade-up-delay-2,
+  .fade-up-delay-3 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-intro-hidden {
+    opacity: 1;
+    transform: none;
   }
 }

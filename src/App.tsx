@@ -11,7 +11,10 @@ import { Welcome } from '@/components/Welcome'
 import { WelcomeLoader } from '@/components/WelcomeLoader'
 import { cn } from '@/lib/utils'
 
-type LoadPhase = 'loading' | 'exiting' | 'done'
+type LoadPhase = 'loading' | 'revealing' | 'done'
+
+const COPY_DELAY_MS = 120
+const MEDIA_DELAY_MS = 320
 
 function App() {
   const [phase, setPhase] = useState<LoadPhase>(() =>
@@ -20,8 +23,39 @@ function App() {
       ? 'done'
       : 'loading',
   )
+  const [titleReady, setTitleReady] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const [titleSettled, setTitleSettled] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const [copyReady, setCopyReady] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const [mediaReady, setMediaReady] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
 
-  const finishLoader = useCallback(() => {
+  const handleBrandAppear = useCallback(() => {
+    setPhase('revealing')
+    setTitleReady(true)
+  }, [])
+
+  const handleHeadingSettled = useCallback(() => {
+    setTitleSettled(true)
+    window.setTimeout(() => setCopyReady(true), COPY_DELAY_MS)
+    window.setTimeout(() => setMediaReady(true), MEDIA_DELAY_MS)
+  }, [])
+
+  const handleComplete = useCallback(() => {
     setPhase('done')
   }, [])
 
@@ -32,42 +66,41 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (phase !== 'loading') return
-
-    document.body.style.overflow = 'hidden'
-    window.scrollTo(0, 0)
-    const exitTimer = window.setTimeout(() => setPhase('exiting'), 2800)
-
-    return () => {
-      window.clearTimeout(exitTimer)
+    if (phase === 'loading' || phase === 'revealing') {
+      document.body.style.overflow = 'hidden'
+      window.scrollTo(0, 0)
+      return
     }
+    document.body.style.overflow = ''
   }, [phase])
-
-  useEffect(() => {
-    if (phase === 'done') {
-      document.body.style.overflow = ''
-    }
-  }, [phase])
-
-  const introReady = phase === 'exiting' || phase === 'done'
 
   return (
     <>
       {phase !== 'done' && (
         <WelcomeLoader
-          exiting={phase === 'exiting'}
-          onExitComplete={finishLoader}
+          onBrandAppear={handleBrandAppear}
+          onHeadingSettled={handleHeadingSettled}
+          onComplete={handleComplete}
         />
       )}
 
       <div
-        className={cn('min-h-svh', phase === 'loading' && 'invisible')}
+        className={cn(
+          'min-h-svh',
+          // Keep layout measurable, but hide chrome until the shared heading appears
+          phase === 'loading' && 'invisible',
+        )}
         aria-hidden={phase === 'loading' || undefined}
       >
         <Header />
         <main id="main" className="flex flex-col">
           <div className="order-1">
-            <Hero introReady={introReady} />
+            <Hero
+              titleReady={titleReady}
+              titleSettled={titleSettled}
+              copyReady={copyReady}
+              mediaReady={mediaReady}
+            />
           </div>
           <div className="order-2 md:order-3">
             <Welcome />
